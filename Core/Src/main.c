@@ -47,7 +47,6 @@ UART_HandleTypeDef huart1;
 uint32_t ticks = 0;
 
 char c[64];
-char temp[64];
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
