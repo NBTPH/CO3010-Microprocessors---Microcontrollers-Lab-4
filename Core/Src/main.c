@@ -109,7 +109,9 @@ int main(void)
   SCH_Add_Task(toggle_led_3, 5, 150);
   SCH_Add_Task(toggle_led_4, 5, 200);
   SCH_Add_Task(toggle_led_5, 5, 250);
-  SCH_Add_Task(toggle_led_6, 500, 0);
+  SCH_Add_Task(toggle_led_6, 200, 0);
+
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6, GPIO_PIN_SET);
   HAL_TIM_Base_Start_IT(&htim2);
   /* USER CODE END 2 */
   uint32_t delay = 0;
@@ -262,7 +264,7 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3|GPIO_PIN_4
-                          |GPIO_PIN_5|GPIO_PIN_6, GPIO_PIN_SET);
+                          |GPIO_PIN_5|GPIO_PIN_6, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : PA1 PA2 PA3 PA4
                            PA5 PA6 */
