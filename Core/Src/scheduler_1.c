@@ -18,8 +18,6 @@ ERROR_REPORT Last_error_code_G;
 uint16_t Error_tick_count_G = 0;
 
 void SCH_Init(void){
-	Error_code_G = 0;
-
 	if(!(queue_head == NULL && queue_tasks_num == 0)){ //if queue not empty, delete the queue
 		sTask* temp = NULL;
 		while(queue_head){
@@ -39,7 +37,7 @@ void SCH_Init(void){
 }
 
 uint32_t SCH_Add_Task(void (* pFunction) () , uint32_t DELAY, uint32_t PERIOD){
-	if(pFunction == NULL || DELAY < 0 || PERIOD < 0){ //check if invalid add
+	if(pFunction == NULL){ //check if invalid add
 		Error_code_G = ERROR_SCH_INVALID_TASK_INIT;
 		return -1;
 	}
@@ -62,13 +60,19 @@ uint32_t SCH_Add_Task(void (* pFunction) () , uint32_t DELAY, uint32_t PERIOD){
 
 	if(queue_head == NULL && queue_tasks_num == 0){//if queue is empty, add one task to queue
 		queue_head = (sTask*) malloc(sizeof(sTask));
-		if (queue_head == NULL) return -1; // allocation failed
+		if(queue_head == NULL){
+			Error_code_G = ERROR_SCH_QUEUE_INITIALIZATION_FAILED;
+			return -1; // allocation failed
+		}
 		*queue_head = SCH_tasks_G[i];
 		queue_head->next = NULL;
 	}
 	else{//if not
 		sTask* new_task = (sTask*) malloc(sizeof(sTask));
-		if (new_task == NULL) return -1;
+		if (new_task == NULL) {
+			Error_code_G = ERROR_SCH_QUEUE_INITIALIZATION_FAILED;
+			return -1;
+		}
 		*new_task = SCH_tasks_G[i];
 		new_task->next = NULL;
 
