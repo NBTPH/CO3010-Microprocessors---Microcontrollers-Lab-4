@@ -88,7 +88,7 @@ uint32_t SCH_Add_Task(void (* pFunction) () , uint32_t DELAY, uint32_t PERIOD){
 
 		new_task->delay -= delay_accumulate; //calculate relative delay
 
-		if (prev == NULL) { //if empty queue, insert at head
+		if (prev == NULL) { //if task needed to be insert at head
 			new_task->next = queue_head;
 			if (queue_head != NULL) {
 				queue_head->delay -= new_task->delay;
